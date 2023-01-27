@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Tests for utils module"""
 from unittest import TestCase, main
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from parameterized import parameterized
 import utils
+
 
 class TestAccessNestedMap(TestCase):
     """Tests class for AccessNestedMap"""
@@ -28,19 +29,48 @@ class TestAccessNestedMap(TestCase):
 
 class TestGetJson(TestCase):
     """Test the get_json method"""
-    
-    @parameterized.expand([("http://example.com", {"payload": True}),
-                           ("http://holberton.io", {"payload": False})])
+
+    @parameterized.expand(
+        [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ]
+    )
     def test_get_json(self, test_url, test_payload):
         """
         Tests if the mocked get method was calles once
         Tests if the output is equal to the payload
         """
-        with patch('utils.requests.get') as mock_request:
-            mock_request.json.return_value = test_payload
+        mock_resp = Mock()
+        mock_resp.json.return_value = test_payload
+        with patch("utils.requests.get") as mock_request:
+            mock_request.return_value = mock_resp
             payload = utils.get_json(test_url)
             self.assertEqual(payload, test_payload)
             mock_request.assert_called_once()
+
+
+class TestMemoize(TestCase):
+    """Tests memoized decorator"""
+
+    def test_memoize(self):
+        """unittest for memoize"""
+
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @utils.memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, "a_method") as mock_method:
+            mock_method.return_value = 42
+            my_object = TestClass()
+            res1, res2 = my_object.a_property, my_object.a_property
+            self.assertEqual(res1, res2)
+            mock_method.assert_called_once()
+
 
 if __name__ == "__main__":
     main()
