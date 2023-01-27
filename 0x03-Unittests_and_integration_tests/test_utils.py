@@ -3,6 +3,7 @@
 from unittest import TestCase, main
 from unittest.mock import patch, Mock
 from parameterized import parameterized
+from utils import memoize
 import utils
 
 
@@ -63,7 +64,7 @@ class TestMemoize(TestCase):
                 """Method to mock"""
                 return 42
 
-            @utils.memoize
+            @memoize
             def a_property(self):
                 """memoized function"""
                 return self.a_method()
