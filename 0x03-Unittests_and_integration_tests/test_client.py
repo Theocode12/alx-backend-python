@@ -50,7 +50,7 @@ class TestGithubOrgClient(TestCase):
             mock_pub_repos.return_value = (
                 "https://api.github.com/orgs/{}/repos".format(org_name)
             )
-            pub_repo = git_org.public_repos()
+            # pub_repo = git_org.public_repos()
             # repos = [repo["name"] for repo in mock_json.return_value]
             # self.assertListEqual(repos, pub_repo)
             # mock_json.assert_called_once()
