@@ -33,7 +33,6 @@ class TestGithubOrgClient(TestCase):
         ) as MockClient:
             self.assertEqual(git_org._public_repos_url, payload["repos_url"])
 
-    
     @patch("client.get_json")
     def test_public_repos(self, mock_json):
         """Test GithubOrgClient.public_repos method"""
@@ -47,9 +46,7 @@ class TestGithubOrgClient(TestCase):
             "client.GithubOrgClient._public_repos_url",
             new_callable=PropertyMock,
         ) as mock_pub_repos:
-            mock_pub_repos.return_value = (
-                "https://api.github.com/orgs/repos"
-            )
+            mock_pub_repos.return_value = "https://api.github.com/orgs/repos"
             # pub_repo = git_org.public_repos()
             # repos = [repo["name"] for repo in mock_json.return_value]
             # self.assertListEqual(repos, pub_repo)
