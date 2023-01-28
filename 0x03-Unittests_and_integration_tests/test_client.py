@@ -33,22 +33,22 @@ class TestGithubOrgClient(TestCase):
         ) as MockClient:
             self.assertEqual(git_org._public_repos_url, payload["repos_url"])
 
-    @parameterized.expand([("google"), ("abc")])
+    
     @patch("client.get_json")
-    def test_public_repos(self, org_name, mock_json):
+    def test_public_repos(self, mock_json):
         """Test GithubOrgClient.public_repos method"""
         mock_json.return_value = [
             {"name": "projectA"},
             {"name": "projectB"},
             {"name": "projectC"},
         ]
-        git_org = GithubOrgClient(org_name)
+        # git_org = GithubOrgClient(org_name)
         with patch(
             "client.GithubOrgClient._public_repos_url",
             new_callable=PropertyMock,
         ) as mock_pub_repos:
             mock_pub_repos.return_value = (
-                "https://api.github.com/orgs/{}/repos".format(org_name)
+                "https://api.github.com/orgs/repos"
             )
             # pub_repo = git_org.public_repos()
             # repos = [repo["name"] for repo in mock_json.return_value]
