@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""""""
+"""Tests the client module"""
 from unittest import TestCase
 from unittest.mock import patch, PropertyMock
 from client import GithubOrgClient
