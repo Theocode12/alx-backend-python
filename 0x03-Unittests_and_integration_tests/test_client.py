@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Tests the client module"""
 from unittest import TestCase
-from unittest.mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock, Mock, MagicMock
 from client import GithubOrgClient
-from parameterized import parameterized
-
+from parameterized import parameterized, parameterized_class
+from fixtures import TEST_PAYLOAD
 
 class TestGithubOrgClient(TestCase):
     """Test Github API client"""
@@ -63,3 +63,16 @@ class TestGithubOrgClient(TestCase):
         self.assertEqual(
             GithubOrgClient.has_license(repo, license_key), h_license
         )
+
+@parameterized_class(('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'))
+class TestIntegrationGithubOrgClient(TestCase):
+    """Integration tests for public_repos"""
+    def setUp(self) -> None:
+        resp = MagicMock(json=MagicMock(side_effect=TEST_PAYLOAD))
+        self.get_patcher= patch("client.get_json", return_value=resp)
+        self.get_patcher.start()
+        
+        
+    def tearDownClass(self) -> None:
+        self.get_patcher.stop()
+        return super().tearDown()
