@@ -11,8 +11,12 @@ def stream_user_ages():
 
 
 def main():
-    import statistics
-    avg = statistics.fmean(stream_user_ages())
+    sum_ages = 0
+    user_num = 0
+    for age in stream_user_ages():
+        user_num += 1
+        sum_ages += int(age)
+    avg = sum_ages / user_num
     print(f"Average age of users: {avg}")
 
 if __name__ == '__main__':
