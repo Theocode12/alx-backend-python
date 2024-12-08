@@ -19,6 +19,7 @@ def log_queries(func):
         query = kwargs.get("query")
         if query:
             logging.info(f"Executing query: {query}")
+            print(f"{datetime.now}, {query}")
         return func(*args, **kwargs)
    return wrapper
 
