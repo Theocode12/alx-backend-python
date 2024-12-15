@@ -45,3 +45,11 @@ class TestGithubOrgClient(unittest.TestCase):
             mocked_method.return_value = {"repos_url": "github.com/google"}
             resp_from_gh_client = gh_client._public_repos_url
             self.assertEqual(resp_from_gh_client, "github.com/google")
+
+    def test_public_repos(self):
+        """mocks utils.get_json to test getting json from an api"""
+        with patch( "client.get_json") as mocked_method:
+            mocked_method.return_value = {"repos_url": "github.com/google"}
+            gh_client = GithubOrgClient("google")
+            resp_from_gh_client = gh_client._public_repos_url
+            self.assertEqual(resp_from_gh_client, "github.com/google")
