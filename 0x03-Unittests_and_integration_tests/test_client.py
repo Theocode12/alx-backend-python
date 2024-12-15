@@ -61,8 +61,8 @@ class TestGithubOrgClient(unittest.TestCase):
         ]
     )
     def test_has_license(
-            self, repo: Mapping, license_key: str, has_license: bool
+            self, repo: Dict[str, Dict], license_key: str, has_license: bool
     ):
-        """mocks GithubOrgClient.has_license"""
+        """tests GithubOrgClient.has_license"""
         resp_from_gh_client = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(resp_from_gh_client, has_license)
