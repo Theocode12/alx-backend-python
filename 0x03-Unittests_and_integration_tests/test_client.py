@@ -53,3 +53,16 @@ class TestGithubOrgClient(unittest.TestCase):
             gh_client = GithubOrgClient("google")
             resp_from_gh_client = gh_client._public_repos_url
             self.assertEqual(resp_from_gh_client, "github.com/google")
+
+    @parameterized.expand(
+        [
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
+        ]
+    )
+    def test_has_license(
+            self, repo: Mapping, license_key: str, has_license: bool
+    ):
+        """mocks GithubOrgClient.has_license"""
+        resp_from_gh_client = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(resp_from_gh_client, has_license)
