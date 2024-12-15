@@ -58,8 +58,8 @@ class TestGithubOrgClient(unittest.TestCase):
             ({"license": {"key": "other_license"}}, "my_license", False),
         ]
     )
-    def test_has_license(self, repo: Dict[str, Dict], license_key: str, 
-                         has_license: bool
+    def test_has_license(self, repo: Dict[str, Dict], license_key: str,
+                        has_license: bool
     ):
         """tests GithubOrgClient.has_license"""
         resp_from_gh_client = GithubOrgClient.has_license(repo, license_key)
