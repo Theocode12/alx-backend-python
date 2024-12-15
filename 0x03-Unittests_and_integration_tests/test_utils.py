@@ -32,12 +32,12 @@ class TestAccessNestedMap(unittest.TestCase):
 
     @parameterized.expand(
         [
-            ("attempts to access empty map", {}, ("a",)),
-            ("attempts to access a non existent map", {"a": 1}, ("a", "b")),
+            ({}, ("a",)),
+            ({"a": 1}, ("a", "b")),
         ]
     )
     def test_access_nested_map_exception(
-        self, name: str, nested_map: Mapping, keys: Sequence
+        self, nested_map: Mapping, keys: Sequence
     ):
         """tests invalid path"""
         with self.assertRaises(KeyError) as e:
@@ -49,13 +49,13 @@ class TestGetJson(unittest.TestCase):
 
     @parameterized.expand(
         [
-            ("example url", "http://example.com", {"payload": True}),
-            ("holbertom url", "http://holberton.io", {"payload": False}),
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
         ]
     )
     @patch("requests.get")
     def test_get_json(
-            self, name: str, url: str, response: Mapping, mocked_get: Any
+            self, url: str, response: Mapping, mocked_get: Any
     ):
         """mocks request.get to test getting json from an api"""
         mock_response = MagicMock()
