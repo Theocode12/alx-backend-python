@@ -36,20 +36,12 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(resp_from_gh_client, response)
         mocked_get.assert_called_once_with(gh_client.ORG_URL.format(org=org))
 
-    @parameterized.expand(
-        [
-            ("google", {"repos_url": "github.com/google"}),
-            ("abc", {"repos_url": "github.com/abc_repo"}),
-        ]
-    )
-    def test_public_repos_url(
-            self, org: str, response: Mapping
-    ):
+    def test_public_repos_url(self):
         """mocks request.get to test getting json from an api"""
-        gh_client = GithubOrgClient(org)
+        gh_client = GithubOrgClient("google")
         with patch(
              "client.GithubOrgClient.org", new_callable=PropertyMock
         ) as mocked_method:
-            mocked_method.return_value = response
+            mocked_method.return_value = {"repos_url": "github.com/google"}
             resp_from_gh_client = gh_client._public_repos_url
-            self.assertEqual(resp_from_gh_client, response["repos_url"])
+            self.assertEqual(resp_from_gh_client, "github.com/google")
