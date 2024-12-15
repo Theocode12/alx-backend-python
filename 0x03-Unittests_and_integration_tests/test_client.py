@@ -24,9 +24,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ]
     )
     @patch("requests.get")
-    def test_org(
-            self, org: str, response: Mapping, mocked_get: Any
-    ):
+    def test_org(self, org: str, response: Mapping, mocked_get: Any):
         """mocks request.get to test getting json from an api"""
         mock_response = MagicMock()
         mock_response.json.return_value = response
@@ -40,7 +38,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """mocks request.get to test getting json from an api"""
         gh_client = GithubOrgClient("google")
         with patch(
-             "client.GithubOrgClient.org", new_callable=PropertyMock
+            "client.GithubOrgClient.org", new_callable=PropertyMock
         ) as mocked_method:
             mocked_method.return_value = {"repos_url": "github.com/google"}
             resp_from_gh_client = gh_client._public_repos_url
@@ -60,8 +58,7 @@ class TestGithubOrgClient(unittest.TestCase):
             ({"license": {"key": "other_license"}}, "my_license", False),
         ]
     )
-    def test_has_license(
-            self, repo: Dict[str, Dict], license_key: str, has_license: bool
+    def test_has_license(self, repo: Dict[str, Dict], license_key: str, has_license: bool
     ):
         """tests GithubOrgClient.has_license"""
         resp_from_gh_client = GithubOrgClient.has_license(repo, license_key)
