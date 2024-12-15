@@ -4,6 +4,7 @@
 from parameterized import parameterized, parameterized_class
 import unittest
 from unittest.mock import patch, MagicMock, PropertyMock
+from fixtures import TEST_PAYLOAD
 from client import GithubOrgClient
 from typing import (
     Mapping,
@@ -63,3 +64,24 @@ class TestGithubOrgClient(unittest.TestCase):
         """tests GithubOrgClient.has_license"""
         resp_from_gh_client = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(resp_from_gh_client, has_license)
+
+
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"), TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.get_patcher = patch("client.get_json")
+        cls.get_patcher.return_value = cls.expected_repos
+        cls.get_patcher.start()
+
+    def test_public_repos(self):
+        """mocks utils.get_json to test getting json from an api"""
+        gh_client = GithubOrgClient("google")
+        public_repos = gh_client.public_repos()
+        self.assertEqual(public_repos, self.expected_repos)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.get_patcher.stop()
