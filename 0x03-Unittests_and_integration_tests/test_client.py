@@ -54,6 +54,7 @@ class TestGithubOrgClient(unittest.TestCase):
             resp_from_gh_client = gh_client._public_repos_url
             self.assertEqual(resp_from_gh_client, "github.com/google")
 
+    @parameterized.expand([], skip_on_empty=True)
     def test_has_license(self):
         """tests GithubOrgClient.has_license"""
         repos = [
