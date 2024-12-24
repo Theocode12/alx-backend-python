@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from chats.models import Conversation, Message, User
+from chats import Conversation, Message, User
 
 class MessageSerializer(serializers.ModelSerializer):
     sender_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), pk_field=serializers.UUIDField(format='hex'))
