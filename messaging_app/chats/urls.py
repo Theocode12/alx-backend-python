@@ -3,7 +3,7 @@ from chats.views import MessageViewSet, ConversationViewSet
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers
 
-routers = routers.SimpleRouter()
+routers = routers.DefaultRouter()
 routers.register('messages', MessageViewSet)
 routers.register('conversations', ConversationViewSet)
 

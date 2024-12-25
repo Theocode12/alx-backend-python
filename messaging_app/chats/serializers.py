@@ -5,6 +5,7 @@ class MessageSerializer(serializers.ModelSerializer):
     sender_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), pk_field=serializers.UUIDField(format='hex'))
     receiver_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), pk_field=serializers.UUIDField(format='hex'))
     conversation_id = serializers.PrimaryKeyRelatedField(queryset=Conversation.objects.all(), pk_field=serializers.UUIDField(format='hex'))
+    message_body = serializers.CharField(style={'base_template': 'textarea.html'})
     class Meta:
         model = Message
         fields = ['message_id', 'sender_id', 'receiver_id', 'message_body', 'sent_at', 'conversation_id']
