@@ -7,7 +7,7 @@ from rest_framework_nested.routers import NestedDefaultRouter
 conv_router = routers.DefaultRouter()
 conv_router.register(r'conversations', ConversationViewSet)
 
-message_router = NestedDefaultRouter(conv_router, r'conversations', 'conversations')
+message_router = NestedDefaultRouter(conv_router, r'conversations', lookup='conversations')
 message_router.register('messages', MessageViewSet)
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('', include(message_router.urls)),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# this line was commented out as it was causing some errors
+# urlpatterns = format_suffix_patterns(urlpatterns)
