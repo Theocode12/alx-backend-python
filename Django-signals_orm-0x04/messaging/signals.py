@@ -1,6 +1,6 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
-from .models import Notification, Message, MessageHistory
+from django.db.models.signals import post_save, pre_save, post_delete
+from .models import Notification, Message, MessageHistory, User
 
 @receiver(post_save, sender=Message)
 def notify(sender: Message, **kwargs):
@@ -14,3 +14,8 @@ def loggingMessageHistory(sender: Message, **kwargs):
         receiver=sender.receiver, 
         content=sender.content, 
         )
+    
+@receiver(post_delete, sender=User)
+def clean_up_user_related_data(sender: User, **kwargs):
+    Message.objects.filter(sender=sender).delete()
+    Message.objects.filter(receiver=sender).delete()
