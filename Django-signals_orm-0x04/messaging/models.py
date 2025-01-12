@@ -8,6 +8,7 @@ class Message(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now=True)
     edited = models.BooleanField()
+    unread = models.BooleanField()
 
 class Notification(models.Model):
     receiver = models.ForeignKey('User', on_delete=models.CASCADE, db_column='reciever_id')

@@ -1,0 +1,2 @@
+class UnreadMessagesManager:
+    pass
