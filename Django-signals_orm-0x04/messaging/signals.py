@@ -9,4 +9,8 @@ def notify(sender: Message, **kwargs):
 
 @receiver(pre_save, sender=Message)
 def loggingMessageHistory(sender: Message, **kwargs):
-    MessageHistory.objects.create(sender=sender.sender, receiver=sender.receiver, content=sender.content, edited=sender.edited, timestamp=sender.timestamp)
+    MessageHistory.objects.create(
+        edited_by=sender.sender, 
+        receiver=sender.receiver, 
+        content=sender.content, 
+        )
